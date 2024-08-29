@@ -35,7 +35,7 @@
                   <h5 class="card-title">
                     <strong>{{ $checkoutItem->invoice }}</strong>
                     @if ($paidItem->status == 'unpaid' && $paidItem->expired_at >= now())
-                      <strong class="font-weight-normal" style="color: red">Kadaluarsa</strong>
+                      <strong class="font-weight-normal" style="color: red">Menunggu Pembayaran</strong>
                     @else
                       <strong class="font-weight-normal"
                         style="color: green">{{ ucfirst($paidItem->delivery->status) }}</strong>

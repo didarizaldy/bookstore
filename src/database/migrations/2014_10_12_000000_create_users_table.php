@@ -20,7 +20,7 @@ return new class extends Migration
             $table->string('password');
             $table->enum('active', [1, 0])->default(1);
             $table->timestamp('last_login_at')->nullable();
-            $table->string('last_login_ip')->nullable();
+            $table->string('last_login_ip', 30)->nullable();
             $table->timestamps();
         });
     }

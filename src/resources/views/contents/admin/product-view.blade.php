@@ -45,8 +45,7 @@
               </select>
             </div>
             <div class="col-md-4 text-right">
-              <button id="addProductBtn" class="btn btn-success" data-toggle="modal" data-target="#productModal">Tambah
-                Produk</button>
+              <a href="{{ route('admin.product.add') }}" class="btn btn-success">Tambah Produk</a>
             </div>
           </div>
         </div>
@@ -63,51 +62,6 @@
               </tr>
             </thead>
           </table>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <!-- Modal for Add Product -->
-  <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel"
-    aria-hidden="true">
-    <div class="modal-dialog" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="addProductModalLabel">Tambah Produk</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-          <form id="addProductForm">
-            @csrf
-            <!-- Form fields for the product -->
-            <div class="form-group">
-              <label for="addTitle">Judul</label>
-              <input type="text" class="form-control" id="addTitle" name="title" required>
-            </div>
-            <div class="form-group">
-              <label for="addCategory">Kategori</label>
-              <select class="form-control" id="addCategory" name="id_category" required>
-                @foreach ($showCategories as $category)
-                  <option value="{{ $category->id }}">{{ $category->name }}</option>
-                @endforeach
-              </select>
-            </div>
-            <div class="form-group">
-              <label for="addDisplayPrice">Harga</label>
-              <input type="number" class="form-control" id="addDisplayPrice" name="display_price" required>
-            </div>
-            <div class="form-group">
-              <label for="addStocks">Stok</label>
-              <input type="number" class="form-control" id="addStocks" name="stocks" required>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-dismiss="modal">Batal</button>
-          <button type="button" class="btn btn-primary" id="saveAddProductBtn">Simpan</button>
         </div>
       </div>
     </div>

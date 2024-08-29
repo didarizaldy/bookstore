@@ -11,29 +11,29 @@ use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
-    /**
-     * Register any application services.
-     */
-    public function register(): void
-    {
-        //
-    }
+  /**
+   * Register any application services.
+   */
+  public function register(): void
+  {
+    //
+  }
 
-    /**
-     * Bootstrap any application services.
-     */
-    public function boot(): void
-    {
-        Paginator::useBootstrap();
+  /**
+   * Bootstrap any application services.
+   */
+  public function boot(): void
+  {
+    Paginator::useBootstrap();
 
-        // Share categories with all views
-        View::composer('*', function ($view) {
-            $categories = ProductCategory::select('name')->get();
-            $view->with('categories', $categories);
+    // Share categories with all views
+    View::composer('*', function ($view) {
+      $categories = ProductCategory::get();
+      $view->with('categories', $categories);
 
-            // Share user data with all views
-            $user = User::where('id', Auth::id())->first();
-            $view->with('user', $user);
-        });
-    }
+      // Share user data with all views
+      $user = User::where('id', Auth::id())->first();
+      $view->with('user', $user);
+    });
+  }
 }

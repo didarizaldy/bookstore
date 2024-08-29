@@ -153,7 +153,7 @@
               data-target="#login">Masuk</button>
           </div>
           <div class="col-6 pl-1">
-            <a href="#" class="btn btn-login btn-sm" role="button">Daftar</a>
+            <a href="{{ route('public.register') }}" class="btn btn-login btn-sm" role="button">Daftar</a>
           </div>
         </div>
         <!-- Login Menu End -->
@@ -179,7 +179,7 @@
             <h4 class="text-center"><strong>Masuk</strong></h4>
           </div>
           <div class="col-sm-6">
-            <h6 class="text-center"><a href="{{ route('public.home') }}"
+            <h6 class="text-center"><a href="{{ route('public.register') }}"
                 style="color: #0EB3FF; text-decoration: none;">Daftar</a></h6>
           </div>
         </div>

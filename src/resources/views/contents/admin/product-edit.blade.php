@@ -38,7 +38,7 @@
                 <label for="exampleInputFile">Pilih Gambar</label>
                 <div class="input-group">
                   <div class="custom-file">
-                    <input type="file" class="custom-file-input" id="exampleInputFile" />
+                    <input type="file" class="custom-file-input" id="filename_img" name="filename_img" />
                     <label class="custom-file-label" for="exampleInputFile">Gambar</label>
                   </div>
                 </div>
@@ -106,9 +106,8 @@
               required>
           </div>
           <div class="form-group">
-            <label for="display_price">Penerbits</label>
-            <input type="text" class="form-control" id="publisher" name="publisher" value="{{ $product->publisher }}"
-              required>
+            <label for="display_price">Penerbit</label>
+            <input type="text" class="form-control" id="publisher" name="publisher" value="{{ $product->publisher }}">
           </div>
           <div class="form-group">
             <label>Date:</label>
@@ -149,12 +148,10 @@
           <div class="form-group">
             <label for="display_price">Bahasa</label>
             <select class="form-control" id="lang" name="lang" required>
-              <option value="Billingual" {{ $product->lang == 'Billingual' ? 'selected' : '' }}>
-                {{ $product->lang }}</option>
+              <option value="Billingual" {{ $product->lang == 'Billingual' ? 'selected' : '' }}>Billingual</option>
               <option value="English" {{ $product->lang == 'English' ? 'selected' : '' }}>
-                {{ $product->lang }}</option>
-              <option value="Indonesia" {{ $product->lang == 'Indonesia' ? 'selected' : '' }}>
-                {{ $product->lang }}</option>
+                English</option>
+              <option value="Indonesia" {{ $product->lang == 'Indonesia' ? 'selected' : '' }}>Indonesia</option>
             </select>
           </div>
 
@@ -165,9 +162,11 @@
           </div>
 
         </div>
+        <div class="card-footer">
+          <button type="submit" class="btn btn-primary">Simpan</button>
+        </div>
       </div>
       <!-- Add other fields as necessary -->
-      <button type="submit" class="btn btn-primary">Simpan</button>
     </form>
   </div>
 @endsection

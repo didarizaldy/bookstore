@@ -10,21 +10,21 @@ class Product extends Model
     use HasFactory;
 
     protected $fillable = [
-        'sku', //sudah
-        'id_category', //sudah
-        'title', //sudah
-        'slug', //sudah
-        'filename_img', //sudah
+        'sku',
+        'id_category',
+        'title',
+        'slug',
+        'filename_img',
         'author',
         'publisher',
-        'original_price', //sudah
-        'display_price', //sudah
-        'discount', //sudah
-        'pages', //sudah
+        'original_price',
+        'display_price',
+        'discount',
+        'pages',
         'release_at',
-        'isbn', //sudah
-        'lang', //sudah
-        'stocks', //sudah
+        'isbn',
+        'lang',
+        'stocks',
         'available',
         'created_by',
         'updated_by',

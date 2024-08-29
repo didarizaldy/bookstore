@@ -8,6 +8,7 @@ use App\Models\ProductCategory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Yajra\DataTables\Facades\DataTables;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -63,19 +64,44 @@ class ProductController extends Controller
         return view('contents.admin.product-view', compact('showCategories'));
     }
 
+    public function create()
+    {
+        return view('contents.admin.product-add');
+    }
+
     public function store(Request $request)
     {
-        $data = $request->validate([
-            'sku' => 'required',
-            'id_category' => 'required',
-            'title' => 'required',
-            'display_price' => 'required',
-            'stocks' => 'required',
-            // Add validation for other fields
+        $user = Auth::user();
+
+        if ($request->hasFile('filename_img')) {
+            $uploadFile = Str::slug($request->title) . $request->file('filename_img')->getClientOriginalExtension();
+
+            // Upload image to custom directory
+            $request->file('file_img')->move(public_path('assets/img/cover-book'), $uploadFile);
+        }
+
+        $product = Product::create([
+            'sku' => ucwords($request->sku),
+            'id_category' => $request->id_category,
+            'title' => ucwords(strtolower($request->title)),
+            'slug' => Str::slug(strtolower($request->title)),
+            'filename_img' => $uploadFile,
+            'author' => ucwords(strtolower($request->author)),
+            'publisher' => ucwords(strtolower($request->publisher)),
+            'original_price' => $request->original_price,
+            'display_price' => $request->display_price,
+            'discount' => $request->discount,
+            'pages' => $request->pages,
+            'release_at' => $request->release_at,
+            'isbn' => $request->isbn,
+            'lang' => $request->lang,
+            'stocks' => $request->stocks,
+            'available' => $request->available,
+            'created_by' => $user->username,
         ]);
 
-        $product = Product::create($data);
-        return response()->json(['message' => 'Product added successfully', 'product' => $product]);
+        // return redirect()->route('admin.product.view');
+        return response()->json($product);
     }
 
     public function edit($id)
@@ -90,14 +116,23 @@ class ProductController extends Controller
         $user = Auth::user();
         $product = Product::findOrFail($id);
 
+        if ($request->hasFile('filename_img')) {
+            $uploadFile = Str::slug($request->title) . $request->file('filename_img')->getClientOriginalExtension();
+
+            // Upload image to custom directory
+            $request->file('file_img')->move(public_path('assets/img/cover-book'), $uploadFile);
+        }
+
+
+
         $product->update([
-            'sku' => $request->sku,
+            'sku' => ucwords($request->sku),
             'id_category' => $request->id_category,
-            'title' => $request->title,
-            'slug' => $request->slug,
-            'filename_img' => $request->file_img,
-            'author' => $request->author,
-            'publisher' => $request->publisher,
+            'title' => ucwords(strtolower($request->title)),
+            'slug' => Str::slug(strtolower($request->title)),
+            'filename_img' => $uploadFile,
+            'author' => ucwords(strtolower($request->author)),
+            'publisher' => ucwords(strtolower($request->publisher)),
             'original_price' => $request->original_price,
             'display_price' => $request->display_price,
             'discount' => $request->discount,
