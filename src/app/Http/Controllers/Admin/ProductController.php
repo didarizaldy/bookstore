@@ -100,8 +100,8 @@ class ProductController extends Controller
             'created_by' => $user->username,
         ]);
 
-        // return redirect()->route('admin.product.view');
-        return response()->json($product);
+        return redirect()->route('admin.product.view');
+        // return response()->json($product);
     }
 
     public function edit($id)

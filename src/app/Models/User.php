@@ -24,6 +24,7 @@ class User extends Authenticatable
         'email',
         'api_token',
         'password',
+        'active',
     ];
 
     /**
@@ -42,6 +43,7 @@ class User extends Authenticatable
      */
     protected $casts = [
         'password' => 'hashed',
+        'active' => 'string',
     ];
 
     public function basket()

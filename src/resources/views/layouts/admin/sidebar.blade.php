@@ -85,7 +85,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/charts/chartjs.html" class="nav-link" style="background-color: transparent">
+              <a href="#" class="nav-link" style="background-color: transparent">
                 <i class="far fa-angle-right nav-icon"></i>
                 <p>Penghasilan Toko</p>
               </a>
@@ -108,7 +108,7 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/UI/general.html" class="nav-link" style="background-color: transparent">
+              <a href="#" class="nav-link" style="background-color: transparent">
                 <i class="far fa-angle-right nav-icon"></i>
                 <p>Highlight Produk</p>
               </a>
@@ -125,17 +125,17 @@
           </a>
           <ul class="nav nav-treeview">
             <li class="nav-item">
-              <a href="pages/UI/general.html" class="nav-link" style="background-color: transparent">
+              <a href="#" class="nav-link" style="background-color: transparent">
                 <i class="far fa-angle-right nav-icon"></i>
                 <p>Pengaturan</p>
               </a>
             </li>
           </ul>
         </li>
-        @if (Auth::user()->hasRole('admin'))
+        @if (Auth::user()->hasRole('opsweb'))
           <li class="nav-item menu-open">
             <a href="#" class="nav-link" style="background-color: transparent">
-              <i class="nav-icon fas fa-store"></i>
+              <i class="nav-icon far fa-eye"></i>
               <p>
                 User
                 <i class="fas fa-angle-left right"></i>
@@ -143,7 +143,8 @@
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="pages/UI/general.html" class="nav-link" style="background-color: transparent">
+                <a href="{{ route('admin.user.view') }}" class="nav-link" style="background-color: transparent">
+                  <i class="far fa-angle-right nav-icon"></i>
                   <p>Pengaturan</p>
                 </a>
               </li>

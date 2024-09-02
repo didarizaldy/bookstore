@@ -31,13 +31,16 @@ class RegisterController extends Controller
             ]);
         }
 
-        User::create([
+        $user = User::create([
             'username' => strtolower($request->username),
             'fullname' => ucwords(strtolower($request->fullname)),
             'email' => strtolower($request->email),
             'api_token' => Str::random(100),
-            'password' => bcrypt($request->password)
+            'password' => bcrypt($request->password),
+            'active' => '1'
         ]);
+
+        $user->assignRole('user');
 
         return response()->json(['success' => true, 'message' => 'success'], 200);
     }

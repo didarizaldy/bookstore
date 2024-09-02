@@ -18,4 +18,8 @@ class BankAccount extends Model
         'created_by',
         'updated_by',
     ];
+
+    protected $casts = [
+        'active' => 'string',
+    ];
 }

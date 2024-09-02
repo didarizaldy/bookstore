@@ -1,7 +1,7 @@
 @extends('layouts.admin.app')
 
 @section('titlebar')
-  Pengelolaan Rekening
+  Pengelolaan User
 @endsection
 
 @section('stylesheet')
@@ -14,7 +14,7 @@
 @section('content-header')
   <section class="content-header" id="breadcrum-header">
     <div class="container-fluid">
-      Rekening
+      User
     </div>
   </section>
 @endsection
@@ -24,17 +24,17 @@
     <div class="col-md-12">
       <div class="card">
         <div class="card-header">
-          <button id="addBankAccountBtn" class="btn btn-sm btn-success">Tambah Rekening</button>
+          <button id="addUserBtn" class="btn btn-sm btn-success">Tambah User</button>
         </div>
         <div class="card-body">
-          <table id="bankAccountTable" class="table table-bordered table-hover">
+          <table id="userTable" class="table table-bordered table-hover">
             <thead>
               <tr>
-                <th>Kode Bank</th>
-                <th>Nama Rekening</th>
-                <th>Nomer Rekening</th>
+                <th>Nama Lengkap</th>
+                <th>Email</th>
                 <th>Status</th>
-                <th>Tindakan</th>
+                <th>Login Terakhir</th>
+                <th>Action</th>
               </tr>
             </thead>
           </table>
@@ -44,35 +44,35 @@
   </div>
 
   <!-- Add/Edit Bank Account Modal -->
-  <div class="modal fade" id="bankAccountModal" tabindex="-1" role="dialog" aria-labelledby="bankAccountModalLabel"
+  <div class="modal fade" id="userModal" tabindex="-1" role="dialog" aria-labelledby="userModalLabel"
     aria-hidden="true">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
-        <form id="bankAccountForm">
+        <form id="userForm">
           @csrf
           <div class="modal-header">
-            <h5 class="modal-title" id="bankAccountModalLabel">Tambah Rekening</h5>
+            <h5 class="modal-title" id="userModalLabel">Tambah User</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
           </div>
           <div class="modal-body">
-            <input type="hidden" id="bankAccountId" name="id">
+            <input type="hidden" id="userId" name="id">
             <div class="form-group">
-              <label for="bank_code">Kode Bank</label>
-              <input type="text" class="form-control" id="bank_code" name="bank_code" required>
+              <label for="username">Username</label>
+              <input type="text" class="form-control" id="username" name="username" required>
             </div>
             <div class="form-group">
-              <label for="bank_name">Nama Bank</label>
-              <input type="text" class="form-control" id="bank_name" name="bank_name" required>
+              <label for="fullname">Nama Lengkap</label>
+              <input type="text" class="form-control" id="fullname" name="fullname" required>
             </div>
             <div class="form-group">
-              <label for="account_name">Nama Rekening</label>
-              <input type="text" class="form-control" id="account_name" name="account_name" required>
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" required>
             </div>
             <div class="form-group">
-              <label for="account_code">Nomor Rekening</label>
-              <input type="text" class="form-control" id="account_code" name="account_code" required>
+              <label for="password">Password</label>
+              <input type="password" class="form-control" id="password" name="password" required>
             </div>
           </div>
           <div class="modal-footer">
@@ -88,27 +88,19 @@
 @section('javascript')
   <script>
     $(document).ready(function() {
-      const bankAccountTable = $('#bankAccountTable').DataTable({
+      const userTable = $('#userTable').DataTable({
         processing: true,
         serverSide: true,
         ajax: {
-          url: '{{ route('admin.bank.view') }}',
+          url: '{{ route('admin.user.view') }}',
         },
         columns: [{
-            data: 'bank_name',
-            render: function(data, type, row) {
-              return data + ' (' + row.bank_code +
-                ')';
-            },
-            name: 'bank_code_and_name'
+            data: 'fullname',
+            name: 'fullname'
           },
           {
-            data: 'account_name',
-            name: 'account_name'
-          },
-          {
-            data: 'account_code',
-            name: 'account_code'
+            data: 'email',
+            name: 'email'
           },
           {
             data: 'active',
@@ -121,6 +113,10 @@
 
               }
             },
+          },
+          {
+            data: 'last_login_at',
+            name: 'last_login_at'
           },
           {
             data: 'actions',
@@ -137,31 +133,31 @@
       });
 
       // Handle Add Button Click
-      $('#addBankAccountBtn').click(function() {
-        $('#bankAccountModalLabel').text('Tambah Rekening');
-        $('#bankAccountForm')[0].reset();
-        $('#bankAccountId').val('');
-        $('#bankAccountModal').modal('show');
+      $('#addUserBtn').click(function() {
+        $('#userModalLabel').text('Tambah User');
+        $('#userForm')[0].reset();
+        $('#userId').val('');
+        $('#userModal').modal('show');
       });
 
       // Handle Edit Button Click
-      $('#bankAccountTable').on('click', '.btn-primary', function() {
+      $('#userTable').on('click', '.btn-primary', function() {
         console.log("click");
-        const data = bankAccountTable.row($(this).parents('tr')).data();
-        $('#bankAccountModalLabel').text('Edit Rekening');
-        $('#bankAccountId').val(data.id);
-        $('#bank_code').val(data.bank_code);
-        $('#bank_name').val(data.bank_name);
-        $('#account_name').val(data.account_name);
-        $('#account_code').val(data.account_code);
-        $('#bankAccountModal').modal('show');
+        const data = userTable.row($(this).parents('tr')).data();
+        $('#userModalLabel').text('Edit User');
+        $('#userId').val(data.id);
+        $('#username').val(data.username);
+        $('#fullname').val(data.fullname);
+        $('#email').val(data.email);
+        $('#password').val(data.password);
+        $('#userModal').modal('show');
       });
 
       // Handle Form Submission for Add/Edit
       const routes = {
-        store: '{{ route('admin.bank.store') }}',
-        update: '{{ route('admin.bank.update', ['id' => 'ID']) }}',
-        deactive: '{{ route('admin.bank.deactive', ['id' => 'ID']) }}'
+        store: '{{ route('admin.user.store') }}',
+        update: '{{ route('admin.user.update', ['id' => 'ID']) }}',
+        deactive: '{{ route('admin.user.deactive', ['id' => 'ID']) }}'
       };
 
       function replaceId(url, id) {
@@ -169,9 +165,9 @@
       }
 
 
-      $('#bankAccountForm').submit(function(e) {
+      $('#userForm').submit(function(e) {
         e.preventDefault();
-        const id = $('#bankAccountId').val();
+        const id = $('#userId').val();
         const url = id ? replaceId(routes.update, id) : replaceId(routes.store);
         const method = id ? 'PUT' : 'POST';
 
@@ -182,16 +178,16 @@
               'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-              bank_code: $('#bank_code').val(),
-              bank_name: $('#bank_name').val(),
-              account_name: $('#account_name').val(),
-              account_code: $('#account_code').val(),
+              username: $('#username').val(),
+              fullname: $('#fullname').val(),
+              email: $('#email').val(),
+              password: $('#password').val(),
             }),
           })
           .then(response => response.json())
           .then(data => {
-            $('#bankAccountModal').modal('hide');
-            bankAccountTable.ajax.reload(null, false);
+            $('#userModal').modal('hide');
+            userTable.ajax.reload(null, false);
             Swal.fire('Berhasil!', data.message, 'success');
           })
           .catch(error => {
@@ -201,8 +197,8 @@
       });
 
       // Handle Deactivate Button Click
-      $('#bankAccountTable').on('click', '.btn-danger', function() {
-        const data = bankAccountTable.row($(this).parents('tr')).data();
+      $('#userTable').on('click', '.btn-danger', function() {
+        const data = userTable.row($(this).parents('tr')).data();
         const url = replaceId(routes.deactive, data.id);
 
         Swal.fire({
@@ -224,7 +220,7 @@
               })
               .then(response => response.json())
               .then(data => {
-                bankAccountTable.ajax.reload(null, false);
+                userTable.ajax.reload(null, false);
                 Swal.fire('Berhasil!', data.message, 'success');
               })
               .catch(error => {

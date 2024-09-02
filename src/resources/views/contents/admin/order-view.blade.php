@@ -46,8 +46,8 @@
             <thead>
               <tr>
                 <th>ID Payment</th>
-                <th>Type</th>
                 <th>Status</th>
+                <th>Type</th>
                 <th>Connote</th>
                 <th>Logistic</th>
                 <th>Total Payment</th>
@@ -78,12 +78,13 @@
             name: 'id_payment'
           },
           {
-            data: 'type',
-            name: 'type'
+            data: 'status-delivery',
+            render: function(data, type, row) {
+              return data.charAt(0).toUpperCase() + data.slice(1);
+            }
           },
           {
-            data: 'status',
-            name: 'status'
+            data: 'status-payment'
           },
           {
             data: 'connote',
