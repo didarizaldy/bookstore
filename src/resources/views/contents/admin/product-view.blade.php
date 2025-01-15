@@ -126,6 +126,7 @@
       $('#categoryFilter, #sortFilter').change(function() {
         productTable.draw();
       });
+
       const routes = {
         store: '{{ route('admin.product.add') }}',
         destroy: '{{ route('admin.product.delete', ['id' => 'ID']) }}'
